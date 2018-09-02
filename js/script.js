@@ -1,3 +1,5 @@
+/*---- Tic-Tac-Toe Game In JavaScript 9-2-2018 ----*/
+/*---- Multi-Player Home Page ----*/
 var divScreen = document.createElement('div');
 divScreen.className = "screen screen-start";
 divScreen.id = "start";
@@ -28,11 +30,6 @@ input2.placeholder = 'Player2';
 label2.appendChild(input2);
 headerScreen.appendChild(label2);
 headerScreen.appendChild(a);
-// var singlePlayer = document.createElement('a');
-// singlePlayer.href = '#';
-// singlePlayer.className = 'button1';
-// singlePlayer.textContent = "Single Player";
-// headerScreen.appendChild(singlePlayer);
 divScreen.appendChild(headerScreen);
 divScreen.style.display = "none";
 const mainDiv = document.querySelector('.board');
@@ -42,6 +39,7 @@ var player1 = document.querySelector('#player1');
 var player2 = document.querySelector('#player2');
 var ul = document.querySelector('.boxes');
 var boxes = ul.children;
+/*---- Wining Combinations ----*/
 const winCombos = [
   [0,1,2],
   [3,4,5],
@@ -53,8 +51,6 @@ const winCombos = [
   [6,4,2]
 ]
 var board;
-var Play1 = 'O';
-var Play2 = 'X';
 var name1;
 var name2;
 var nameLabel1 = document.createElement('label');
@@ -66,7 +62,7 @@ player2.appendChild(nameLabel2);
 var turn;
 var newBoard;
 let gameWon;
-/* ---- Main Screen (Multi-Player OR Single Player Options) ---- */
+/* ---- Home Screen (Multi-Player OR Single Player Options) ---- */
 var divHome = document.createElement('div');
 divHome.className = "screen screen-home";
 divHome.id = "start";
@@ -94,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function(){
     divScreen.style.display = "none";
     mainDiv.style.display = "none";
 });
-
+/*---- When user clicks on the MultiPlayer Button on Home Page ----*/
 multiPlayer.addEventListener('click', function(){
   divHome.style.display = "none";
   divScreen.style.display = "";
@@ -135,7 +131,7 @@ function cursorLeave(event){
        }
 }
 
-// when the user clicks on the tic tac toe board.
+// when the multiplayer user clicks on the tic tac toe board.
 function playerClick(event){
   if(!event.target.className.includes('box box-filled-1') || !event.target.className.includes('box box-filled-2')){
     if(player1.className.includes('active') && !event.target.className.includes('box box-filled-1') && !event.target.className.includes('box box-filled-2')){
@@ -152,7 +148,7 @@ function playerClick(event){
  }
 }
 
-// Determine Winner
+// Determine Winner MultiPlayer
 function playerTurn(cellID, player){
      board[cellID] = player.id;
      boxes[cellID].removeEventListener('click', playerClick, false);
@@ -278,7 +274,7 @@ function playerMouseover(event){
    }
 }
 }
-
+/*---- when the single player clicks on the board for their turn ----*/
 function splayerClick(event){
   if(!event.target.className.includes('box box-filled-1') || !event.target.className.includes('box box-filled-2')){
     if(player1.className.includes('active') && !event.target.className.includes('box box-filled-1') && !event.target.className.includes('box box-filled-2')){
@@ -299,9 +295,10 @@ function clickTurn(event){
       }
 }
 
+/*---- Calls the minimax function for the Computers Turn ----*/
 function bestCell(){
   var s = minimax(board, "player2").index;
-  return s; // will return the index (check this later.)
+  return s; // will return the index
 }
 
 function sgameOver(gameWon){
@@ -332,12 +329,7 @@ function splayerTurn(cellID, player){
     player1.className = 'players active';
   }
  }
-  // boxes[cellID].removeEventListener('click', playerClick, false);
-  // boxes[cellID].removeEventListener('mouseover', cursorOn, false);
-  // boxes[cellID].removeEventListener('mouseleave', cursorLeave, false);
-
 gameWon = checkWin(board, player);
-
   if(gameWon !== null){
   sgameOver(gameWon);
    } else {
